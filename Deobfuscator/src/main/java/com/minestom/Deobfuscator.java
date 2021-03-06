@@ -29,7 +29,7 @@ public class Deobfuscator {
     private static final Logger LOGGER = LoggerFactory.getLogger(Deobfuscator.class);
     private static final Gson GSON = new Gson();
     private static final File WORK_FOLDER = new File("./work/");
-    private static final File DEOBFUSCATED_FOLDER = new File("./deobfuscated_jars/");
+    private static final File DEOBFUSCATED_FOLDER = getOutJarsDirectory();
     private static File serverJar;
     private static File serverMappings;
 
@@ -203,5 +203,11 @@ public class Deobfuscator {
         } catch (MalformedURLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private static File getOutJarsDirectory() {
+        String outDirectory = System.getenv("DATA_GEN_OUT_JARS");
+        if (outDirectory == null) outDirectory = "./deobfuscated_jars/";
+        return new File(outDirectory);
     }
 }
