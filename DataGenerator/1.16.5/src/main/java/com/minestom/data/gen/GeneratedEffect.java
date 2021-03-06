@@ -1,4 +1,4 @@
-package com.minestom.data_generator;
+package com.minestom.data.gen;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused"})
 public final class GeneratedEffect {

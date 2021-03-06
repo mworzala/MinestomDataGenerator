@@ -1,4 +1,4 @@
-package com.minestom.data_generator;
+package com.minestom.data.gen;
 
 import java.util.List;
 
@@ -9,14 +9,14 @@ public final class GeneratedItem {
     private final boolean damageable;
     private final int maxStackSize;
     private final int maxDurability;
-    @ExtraData
+    @IgnoredData
     private final boolean complex;
     private final boolean edible;
     private final boolean fireResistant;
     private final String descriptionId;
-    @ExtraData
+    @IgnoredData
     private final String eatingSound;
-    @ExtraData
+    @IgnoredData
     private final String drinkingSound;
     private final GeneratedItemFoodProperties foodProperties;
 

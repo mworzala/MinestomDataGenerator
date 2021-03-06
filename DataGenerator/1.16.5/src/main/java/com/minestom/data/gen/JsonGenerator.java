@@ -1,4 +1,4 @@
-package com.minestom.data_generator;
+package com.minestom.data.gen;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -34,7 +34,7 @@ public final class JsonGenerator {
                 @Override
                 public boolean shouldSkipField(FieldAttributes fieldAttributes) {
                     // annotation is null, if not applied to the field.
-                    return fieldAttributes.getAnnotation(ExtraData.class) != null;
+                    return fieldAttributes.getAnnotation(IgnoredData.class) != null;
                 }
 
                 @Override

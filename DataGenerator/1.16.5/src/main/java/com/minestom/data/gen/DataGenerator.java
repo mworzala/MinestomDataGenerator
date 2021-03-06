@@ -1,9 +1,6 @@
-package com.minestom.data_generator;
+package com.minestom.data.gen;
 
-import com.minestom.data_generator.GeneratedBiome.GeneratedBiomeEffects;
-import com.minestom.data_generator.GeneratedBlock.GeneratedBlockState;
-import com.minestom.data_generator.GeneratedBlock.GeneratedBlockState.GeneratedBlockStateMaterial;
-import com.minestom.data_generator.GeneratedItem.GeneratedItemFoodProperties;
+import com.minestom.data.gen.GeneratedBiome.GeneratedBiomeEffects;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -42,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
-import static com.minestom.data_generator.GeneratedItem.GeneratedItemFoodProperties.GeneratedFoodEffect;
 
 public final class DataGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataGenerator.class);
@@ -120,10 +115,10 @@ public final class DataGenerator {
         List<GeneratedBlock> generatedBlocks = new ArrayList<>();
         for (ResourceLocation blockRL : blockRLs) {
             Block b = Registry.BLOCK.get(blockRL);
-            List<GeneratedBlockState> blockStates = new ArrayList<>();
+            List<GeneratedBlock.GeneratedBlockState> blockStates = new ArrayList<>();
 
             for (BlockState possibleState : b.getStateDefinition().getPossibleStates()) {
-                GeneratedBlockStateMaterial generatedBlockStateMaterial = new GeneratedBlockStateMaterial(
+                GeneratedBlock.GeneratedBlockState.GeneratedBlockStateMaterial generatedBlockStateMaterial = new GeneratedBlock.GeneratedBlockState.GeneratedBlockStateMaterial(
                         possibleState.getMaterial().getPushReaction().toString(),
                         possibleState.getMaterial().blocksMotion(),
                         possibleState.getMaterial().isFlammable(),
@@ -134,7 +129,7 @@ public final class DataGenerator {
                         possibleState.getMaterial().getColor().id,
                         possibleState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).toAabbs().toString()
                 );
-                GeneratedBlockState generatedBlockState = new GeneratedBlockState(
+                GeneratedBlock.GeneratedBlockState generatedBlockState = new GeneratedBlock.GeneratedBlockState(
                         Block.BLOCK_STATE_REGISTRY.getId(possibleState),
                         possibleState.getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO),
                         possibleState.getLightEmission(),
@@ -198,16 +193,16 @@ public final class DataGenerator {
         List<GeneratedItem> generatedItems = new ArrayList<>();
         for (ResourceLocation itemRL : itemRLs) {
             Item i = Registry.ITEM.get(itemRL);
-            GeneratedItemFoodProperties generatedItemFoodProperties = null;
+            GeneratedItem.GeneratedItemFoodProperties generatedItemFoodProperties = null;
             if (i.isEdible() && i.getFoodProperties() != null) {
                 FoodProperties foodProperties = i.getFoodProperties();
-                List<GeneratedFoodEffect> generatedEffects = new ArrayList<>();
+                List<GeneratedItem.GeneratedItemFoodProperties.GeneratedFoodEffect> generatedEffects = new ArrayList<>();
                 for (Pair<MobEffectInstance, Float> effect : foodProperties.getEffects()) {
                     ResourceLocation rl = Registry.MOB_EFFECT.getKey(effect.getFirst().getEffect());
                     if (rl == null) {
                         continue;
                     }
-                    GeneratedFoodEffect foodEffect = new GeneratedFoodEffect(
+                    GeneratedItem.GeneratedItemFoodProperties.GeneratedFoodEffect foodEffect = new GeneratedItem.GeneratedItemFoodProperties.GeneratedFoodEffect(
                             rl.toString(),
                             effect.getFirst().getAmplifier(),
                             effect.getFirst().getDuration(),
@@ -216,7 +211,7 @@ public final class DataGenerator {
                     generatedEffects.add(foodEffect);
                 }
 
-                generatedItemFoodProperties = new GeneratedItemFoodProperties(
+                generatedItemFoodProperties = new GeneratedItem.GeneratedItemFoodProperties(
                         foodProperties.canAlwaysEat(),
                         foodProperties.isFastFood(),
                         foodProperties.getNutrition(),

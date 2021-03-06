@@ -1,4 +1,4 @@
-package com.minestom.data_generator;
+package com.minestom.data.gen;
 
 import org.jetbrains.annotations.NotNull;
 
